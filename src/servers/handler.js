@@ -1,6 +1,6 @@
 const predictClassification = require('../services/inferenceService');
 const crypto = require('crypto');
-const { storeData }  = require('../services/storeData');
+const { storeData, getData }  = require('../services/storeData');
  
 async function postPredictHandler(request, h) {
     const { image } = request.payload;
@@ -25,5 +25,16 @@ async function postPredictHandler(request, h) {
     response.code(201);
     return response;
 }
+
+async function getAllPredictionsHandler(request, h) {
+    const data = await getData();
+    
+    const response = h.response({
+        status: 'success',
+        data
+    });
+    response.code(200);
+    return response;
+}
  
-module.exports = { postPredictHandler };
+module.exports = { postPredictHandler, getAllPredictionsHandler };
